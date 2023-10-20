@@ -12,16 +12,13 @@ async function loginUser(req, res) {
     if (userData) {
         bcrypt.compare(password, userData.password, (err, result) => {
             if (result) {
-                jwt.sign(JSON.stringify(userData), process.env['JWT_SECRECT'], (err, token) => {
-                    if (err) {
-                        console.error('Error while generating JWT:', err);
-                        res.status(500).send('Internal Server Error');
-                    } else if (token) {
-                        res.send({ userData, token });
-                    } else {
-                        res.send('Something went wrong');
-                    }
-                });
+                let data = {
+                    "name": userData.name,
+                    "email": userData.email,
+                    "phone": userData.phone_number,
+                }
+                let token = jwt.sign(data, process.env['JWT_SECRECT'], { expiresIn: '1h' });
+                res.send({ data, token });
             }
             else {
                 res.send("Email or Password doesn't match");
@@ -35,7 +32,11 @@ async function loginUser(req, res) {
 /* register */
 async function registerUser(req, res) {
     let data = await registerNewUser(req.body);
-    res.send(data);
+    if (data) {
+        res.send("User saved successfully");
+    } else {
+        res.send("Somethong Went Wrong");
+    }
 }
 
 module.exports = {

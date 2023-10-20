@@ -9,9 +9,9 @@ async function registerNewUser(data) {
         data.password = await bcrypt.hash(data.password, parseInt(process.env['BCRYPT_PASSWORD_ROUND']));
         let userSaveData = new User(data);
         await userSaveData.save()
-        return "User saved successfully";
+        return 1;
     } catch (error) {
-        return 'something went wrong';
+        return 0;
     }
 
 }

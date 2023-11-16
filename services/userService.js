@@ -1,7 +1,5 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { User } = require('../models/User');
-mongoose.connection.once('open', () => { });
 
 /* register user */
 async function registerNewUser(data) {

@@ -17,7 +17,7 @@ async function loginUser(req, res) {
                     "email": userData.email,
                     "phone": userData.phone_number,
                 }
-                let token = jwt.sign(data, process.env['JWT_SECRECT'], { expiresIn: '1h' });
+                let token = jwt.sign(data, process.env['JWT_SECRECT'], { expiresIn: '10d' });
                 res.send({ data, token });
             }
             else {

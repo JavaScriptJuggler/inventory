@@ -1,36 +1,27 @@
 const mongoose = require('mongoose');
-const productSchema = new mongoose.Schema({
-    "product_id": String,
-    "product_name": String,
-    "product_category": Number,
-    "product_image": String,
-    "manufacturer": String,
-    "price": Number,
-    "stock": Number,
-    "minimun_stock": Number,
-    "max_stock": Number,
-    "unit": String,
-    "weight": String,
-    "dimensions": String,
-    "supplier_information": String,
-    "date_added": {
-        "type": Date,
-        "default": Date.now
-    },
-    "date_updated": {
-        "type": Date,
-        "default": Date.now
-    },
-    "tax": String,
-    "discount": Number,
-})
 
-// Middleware to automatically update `date_updated` on document update
-productSchema.pre('updateOne', function (next) {
-    this.update({}, { $set: { date_updated: new Date() } });
-    next();
+const productSchema = new mongoose.Schema({
+    "product_name": { type: String, required: true },
+    "sku": { type: String, required: true },
+    "category": { type: String, required: true },
+    "description": { type: String, required: true },
+    "brand": { type: String, required: true },
+    "supplier": { type: String, required: true },
+    "cost_price": { type: Number, required: true },
+    "selling_price": { type: Number, required: true },
+    "quantity_on_hand": { type: Number, required: true },
+    "reorder_level": { type: Number, required: true },
+    "tax_information": { type: String, required: true },
+    "unit_of_measure": { type: String, required: true },
+    "location": { type: String, required: true },
+    "expiry_date": { type: String, required: true },
+    "weight": { type: String, required: true },
+    "image": { type: String, required: true },
+    "notes": { type: String, required: true },
+    "status": { type: String, required: true },
 });
+
 const Product = mongoose.model("products", productSchema);
 module.exports = {
     Product,
-}
+};
